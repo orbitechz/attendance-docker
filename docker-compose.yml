@@ -1,0 +1,30 @@
+services:
+  attendance-backend:
+    container_name: attendance-backend
+    image: ghcr.io/orbitechz/attendance-backend:latest
+    ports: 
+      - "8080:8080"
+    restart: always
+    env_file: 
+      - .env
+  attendance-frontend:
+    container_name: attendance-frontend
+    image: ghcr.io/orbitechz/attendance-frontend:latest
+    ports:
+      - "8000:80"
+    restart: always
+    env_file: 
+      - .env
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: attendance
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
